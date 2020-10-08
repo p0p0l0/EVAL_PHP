@@ -51,7 +51,7 @@
 
                 $stmt->bindParam(':title',$_POST['title'],PDO::PARAM_STR);
                 $stmt->bindParam(':description',$_POST['description'],PDO::PARAM_STR);
-                $stmt->bindParam(':post_at',$_POST['post_at'],PDO::PARAM_NULL);
+                $stmt->bindParam(':post_at',$_POST['post_at'],PDO::PARAM_STR);
                 
                 $stmt->execute();
 

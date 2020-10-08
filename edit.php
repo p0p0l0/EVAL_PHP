@@ -25,18 +25,14 @@
 
     <?php
     require_once("db.php");
-   
-
-    
-
         try {
-        require_once("db.php");
+        
             $select = "SELECT post_title, description, post_at from posts where id = {$_GET['id']}";
             $req = $cnx->prepare($select);
             $req->execute();
             while ($ligne = $req->fetch()) {
                 $title = $ligne['post_title'];
-                $description = $ligne['description'];
+                $description = $ligne['description'];   
                 $date = $ligne['post_at'];
             }
         } catch(Exception $e) {
@@ -45,7 +41,7 @@
 
         if(isset($_POST['save'])){
             try{
-                require_once("db.php");
+                
                 $sql = "update posts
                     set post_title =:title,
                         description= :description,
@@ -55,7 +51,7 @@
 
                 $stmt->bindParam(':title',$_POST['title'],PDO::PARAM_STR);
                 $stmt->bindParam(':description',$_POST['description'],PDO::PARAM_STR);
-                $stmt->bindParam(':post_at',$_POST['post_at'],PDO::PARAM_NULL);
+                $stmt->bindParam(':post_at',$_POST['post_at'],PDO::PARAM_STR);
                 
                 $stmt->execute();
 
