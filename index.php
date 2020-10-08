@@ -22,6 +22,7 @@
         </a>
     </div>
 
+<!-- creation tableau affichant titre description et actions-->
     <div> 
         <table class="table">
             <thead>
@@ -37,20 +38,21 @@
                 <?php 
                 try{
                     require_once("db.php");
-                    $sql = "Select post_title, description, post_at from posts";
+                    $sql = "Select id, post_title, description, post_at from posts";
                     $req = $cnx->prepare($sql);
                     $req->execute();
                     while($data = $req->fetch()){
+                        
                         echo "<tr>
                                 <td>{$data['post_title']}</td>
                                 <td>{$data['description']}</td>
                                 <td>{$data['post_at']}</td>";
                         echo '  <td> 
-                                    <a href="edit.php">
+                                    <a href="edit.php?id='.$data['id'].'">
                                         <img src="crud-icon/edit.png">     
                                     </a>
 
-                                    <a href="delete.php">
+                                    <a href="delete.php?id='.$data['id'].'">
                                         <img src="crud-icon/delete.png">     
                                     </a>
                                 </td>
@@ -59,7 +61,7 @@
                             }
                     $req->closeCursor();
                 }catch (Exception $e){
-                    $e->getMessage();
+                   echo $e->getMessage();
                 }
                 ?>
 
