@@ -49,7 +49,8 @@
                 $sql = "update posts
                     set post_title =:title,
                         description= :description,
-                        post_at= :post_at";
+                        post_at= :post_at
+                    where id={$_GET['id']} ";
                 $stmt = $cnx->prepare($sql);
 
                 $stmt->bindParam(':title',$_POST['title'],PDO::PARAM_STR);

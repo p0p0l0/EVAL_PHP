@@ -12,66 +12,66 @@
 
 </head>
 <body>
-   
-<!-- Bouton create pour ajouter un article-->
-    <div class="d-flex flex-row-reverse mb-1">
-        <a href="add.php">
-            <button class="btn btn-outline-primary" type="button">
-                <img src="crud-icon/add.png"> Create
-            </button>
-        </a>
+    <div class="container">
+    <!-- Bouton create pour ajouter un article-->
+        <div class="d-flex flex-row-reverse mb-1">
+            <a href="add.php">
+                <button class="btn btn-outline-primary" type="button">
+                    <img src="crud-icon/add.png"> Create
+                </button>
+            </a>
+        </div>
+
+    <!-- creation tableau affichant titre description et actions-->
+        <div> 
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <?php 
+                    try{
+                        require_once("db.php");
+                        $sql = "Select id, post_title, description, post_at from posts";
+                        $req = $cnx->prepare($sql);
+                        $req->execute();
+                        while($data = $req->fetch()){
+                            
+                            echo "<tr>
+                                    <td>{$data['post_title']}</td>
+                                    <td>{$data['description']}</td>
+                                    <td>{$data['post_at']}</td>";
+                            echo '  <td> 
+                                        <a href="edit.php?id='.$data['id'].'">
+                                            <img src="crud-icon/edit.png">     
+                                        </a>
+
+                                        <a href="delete.php?id='.$data['id'].'">
+                                            <img src="crud-icon/delete.png">     
+                                        </a>
+                                    </td>
+                                </tr>';
+                            
+                                }
+                        $req->closeCursor();
+                    }catch (Exception $e){
+                    echo $e->getMessage();
+                    }
+                    ?>
+
+                                        
+                </tbody>
+            
+            </table>
+
+        </div>
     </div>
-
-<!-- creation tableau affichant titre description et actions-->
-    <div> 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <?php 
-                try{
-                    require_once("db.php");
-                    $sql = "Select id, post_title, description, post_at from posts";
-                    $req = $cnx->prepare($sql);
-                    $req->execute();
-                    while($data = $req->fetch()){
-                        
-                        echo "<tr>
-                                <td>{$data['post_title']}</td>
-                                <td>{$data['description']}</td>
-                                <td>{$data['post_at']}</td>";
-                        echo '  <td> 
-                                    <a href="edit.php?id='.$data['id'].'">
-                                        <img src="crud-icon/edit.png">     
-                                    </a>
-
-                                    <a href="delete.php?id='.$data['id'].'">
-                                        <img src="crud-icon/delete.png">     
-                                    </a>
-                                </td>
-                               </tr>';
-                        
-                            }
-                    $req->closeCursor();
-                }catch (Exception $e){
-                   echo $e->getMessage();
-                }
-                ?>
-
-                                    
-            </tbody>
-        
-        </table>
-
-    </div>
-
 
   
      <!-- JQUERY -->
